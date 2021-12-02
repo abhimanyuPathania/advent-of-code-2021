@@ -1,4 +1,4 @@
-const path = require("path");
+const path = require("path")
 const { readInputByLine } = require("../../helpers/utils");
 
 async function solutionDay01() {
@@ -12,9 +12,10 @@ async function solutionDay01() {
       result += 1;
     }
   }
-  console.log("solutionDay01::result", result);
+  console.log("solutionDay01::result", result)
 }
 
 module.exports = {
   solutionDay01,
 };
+// some commetn

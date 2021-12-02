@@ -1,10 +1,10 @@
-const path = require("path")
-const { readInputByLine } = require("../../helpers/utils");
+const path = require('path');
+const { readInputByLine } = require('../../helpers/utils');
 
 async function solutionDay01() {
-  const inputsFilePath = path.join(__dirname, "./input.txt");
+  const inputsFilePath = path.join(__dirname, './input.txt');
   const inputData = await readInputByLine(inputsFilePath, (v) =>
-    parseInt(v, 10)
+    parseInt(v, 10),
   );
   let result = 0;
   for (let i = 1; i < inputData.length; i += 1) {
@@ -12,10 +12,10 @@ async function solutionDay01() {
       result += 1;
     }
   }
-  console.log("solutionDay01::result", result)
+  console.log('solutionDay01::result', result);
 }
 
 module.exports = {
   solutionDay01,
 };
-// some commetn
+// some com

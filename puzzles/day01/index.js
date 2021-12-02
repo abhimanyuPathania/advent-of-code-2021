@@ -18,4 +18,3 @@ async function solutionDay01() {
 module.exports = {
   solutionDay01,
 };
-// some com

@@ -51,8 +51,8 @@ function solutionDay03Part1(inputData) {
 function solutionDay03Part2(inputData) {
   const binaryNoLength = inputData[0].length;
   /**
-   * rating: o2 (bit 1 are more)
-   * rating: co2 (bit 1 are more)
+   * rating: o2; take larger filtered slice
+   * rating: co2; take smaller filtered slice
    */
   const filterBitData = (bitArrData, colIndex, rating) => {
     const filteredBit0 = [];

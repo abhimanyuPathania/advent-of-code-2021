@@ -37,6 +37,19 @@ function getStraightLines(lines) {
   });
 }
 
+function getDiagonalLines(lines) {
+  return lines.filter((line) => {
+    const c1 = line[0];
+    const c2 = line[1];
+    const x1 = c1[0];
+    const y1 = c1[1];
+    const x2 = c2[0];
+    const y2 = c2[1];
+    const slope = (y2 - y1) / (x2 - x1);
+    return slope === 1 || slope === -1;
+  });
+}
+
 function getCoordinateBoundries(lines) {
   let minX = 0;
   let maxX = 0;
@@ -109,13 +122,29 @@ function plotStraightLineOnPlane(plane, line) {
   return plane;
 }
 
-function solutionDay05Part1(lines) {
-  const straightLines = getStraightLines(lines);
-  const boundries = getCoordinateBoundries(straightLines);
-  const plane = getCartesianPlane(boundries);
+function plotDiagonalLineOnPlane(plane, line) {
+  const c1 = line[0];
+  const c2 = line[1];
+  const x1 = c1[0];
+  const y1 = c1[1];
+  const x2 = c2[0];
+  const y2 = c2[1];
 
-  straightLines.forEach((line) => plotStraightLineOnPlane(plane, line));
+  const minXCoordinate = Math.min(x1, x2);
+  const maxXCoordinate = Math.max(x1, x2);
+  const startingYCoordinate = minXCoordinate === x1 ? y1 : y2;
+  const endingYCoordinate = startingYCoordinate === y1 ? y2 : y1;
+  const yCoordinateUpdater = startingYCoordinate > endingYCoordinate ? -1 : 1;
+  let currentYCoordinate = startingYCoordinate;
 
+  for (let x = minXCoordinate; x <= maxXCoordinate; x += 1) {
+    plane[x][currentYCoordinate] = plane[x][currentYCoordinate] + 1;
+    // calculate next y coordinate
+    currentYCoordinate = currentYCoordinate + yCoordinateUpdater;
+  }
+}
+
+function getDangerousPoints(plane, boundries) {
   let dangerousPoints = 0;
   for (let x = boundries.minX; x <= boundries.maxX; x += 1) {
     for (let y = boundries.minY; y <= boundries.maxY; y += 1) {
@@ -125,12 +154,35 @@ function solutionDay05Part1(lines) {
       }
     }
   }
+  return dangerousPoints;
+}
 
+function solutionDay05Part1(lines) {
+  const straightLines = getStraightLines(lines);
+  const boundries = getCoordinateBoundries(straightLines);
+  const plane = getCartesianPlane(boundries);
+
+  straightLines.forEach((line) => plotStraightLineOnPlane(plane, line));
+
+  const dangerousPoints = getDangerousPoints(plane, boundries);
   console.log('solutionDay05::part1', dangerousPoints);
   return dangerousPoints;
 }
 
-function solutionDay05Part2(inputData) {}
+function solutionDay05Part2(lines) {
+  const straightLines = getStraightLines(lines);
+  const diagonalLines = getDiagonalLines(lines);
+  const filteredLines = [...straightLines, ...diagonalLines];
+  const boundries = getCoordinateBoundries(filteredLines);
+  const plane = getCartesianPlane(boundries);
+
+  straightLines.forEach((line) => plotStraightLineOnPlane(plane, line));
+  diagonalLines.forEach((line) => plotDiagonalLineOnPlane(plane, line));
+
+  const dangerousPoints = getDangerousPoints(plane, boundries);
+  console.log('solutionDay05::part2', dangerousPoints);
+  return dangerousPoints;
+}
 
 async function solutionDay05(filename) {
   const inputData = await getInputData(filename);

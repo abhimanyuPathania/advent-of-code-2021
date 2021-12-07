@@ -10,11 +10,11 @@ describe('day 06', () => {
       .catch((err) => console.error(err));
   });
 
-  // test('should be valid for puzzle input', () => {
-  //   return solutionDay06('input.txt')
-  //     .then((result) => {
-  //       expect(result).toStrictEqual([365862, undefined]);
-  //     })
-  //     .catch((err) => console.error(err));
-  // });
+  test('should be valid for puzzle input', () => {
+    return solutionDay06('input.txt')
+      .then((result) => {
+        expect(result).toStrictEqual([365862, undefined]);
+      })
+      .catch((err) => console.error(err));
+  });
 });

@@ -13,46 +13,31 @@ function solutionDay06Worker(inputData, days) {
   const initialState = [...inputData];
   let simulatedState = initialState;
   for (let i = 0; i < days; i += 1) {
-    const initialStateForTheDay = simulatedState;
-    let nextState = [];
+    console.log(`day-${i} :: ${simulatedState.length}`);
     let newFishBornForTheDay = 0;
-    for (let j = 0; j < initialStateForTheDay.length; j += 1) {
-      const internalTime = initialStateForTheDay[j];
+    for (let j = 0; j < simulatedState.length; j += 1) {
+      const internalTime = simulatedState[j];
       if (internalTime > 0) {
-        nextState.push(internalTime - 1);
+        simulatedState[j] = internalTime - 1;
       } else {
-        nextState.push(6);
+        simulatedState[j] = 6;
         newFishBornForTheDay += 1;
       }
     }
-    nextState = [
-      ...nextState,
-      ...Array.from({ length: newFishBornForTheDay }).fill(8),
-    ];
-    simulatedState = nextState;
+
+    for (let i = 1; i <= newFishBornForTheDay; i += 1) {
+      simulatedState.push(8);
+    }
   }
   const finalNumberOfFish = simulatedState.length;
   console.log('solutionDay06::part1', finalNumberOfFish);
   return finalNumberOfFish;
 }
 
-// function solutionDay06WorkerRecur(initialTimer, days) {
-//   // console.log('solutionDay06WorkerRecur', initialTimer, days);
-//   if (days < initialTimer) return 0;
-//   const effectiveDays = days - (6 - initialTimer);
-//   const directChildren = Math.floor(effectiveDays / 7);
-//   // count self
-//   let totalFishCount = 1;
-//   for (let i = 1; i <= directChildren; i += 1) {
-//     totalFishCount =
-//       totalFishCount + solutionDay06WorkerRecur(6, effectiveDays - 7 * i - 2);
-//   }
-//   return totalFishCount;
-// }
-
 async function solutionDay06(filename) {
   const inputData = await getInputData(filename);
   const part1Solution = solutionDay06Worker(inputData, 80);
+  // const part1Solution = solutionDay06Worker([6], 256);
   // const part2Solution = solutionDay06Worker(inputData, 256);
   return [part1Solution, undefined];
 }

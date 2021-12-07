@@ -36,6 +36,20 @@ function solutionDay06Worker(inputData, days) {
   return finalNumberOfFish;
 }
 
+// function solutionDay06WorkerRecur(initialTimer, days) {
+//   // console.log('solutionDay06WorkerRecur', initialTimer, days);
+//   if (days < initialTimer) return 0;
+//   const effectiveDays = days - (6 - initialTimer);
+//   const directChildren = Math.floor(effectiveDays / 7);
+//   // count self
+//   let totalFishCount = 1;
+//   for (let i = 1; i <= directChildren; i += 1) {
+//     totalFishCount =
+//       totalFishCount + solutionDay06WorkerRecur(6, effectiveDays - 7 * i - 2);
+//   }
+//   return totalFishCount;
+// }
+
 async function solutionDay06(filename) {
   const inputData = await getInputData(filename);
   const part1Solution = solutionDay06Worker(inputData, 80);

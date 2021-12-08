@@ -5,6 +5,7 @@ const { solutionDay04 } = require('./puzzles/day04');
 const { solutionDay05 } = require('./puzzles/day05');
 // const { solutionDay06 } = require('./puzzles/day06');
 const { solutionDay07 } = require('./puzzles/day07');
+const { solutionDay08 } = require('./puzzles/day08');
 
 solutionDay01();
 solutionDay02();
@@ -13,3 +14,4 @@ solutionDay04();
 solutionDay05('input.txt');
 // solutionDay06('input.txt');
 solutionDay07('input.txt');
+solutionDay08('input.txt');

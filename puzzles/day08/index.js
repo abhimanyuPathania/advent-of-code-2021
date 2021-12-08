@@ -42,6 +42,7 @@ function solutionDay08Part1(inputs) {
     });
   });
   console.log('solutionDay08::part1', uniqueOutputPatterns);
+  return uniqueOutputPatterns;
 }
 
 function solutionDay08Part2(inputs) {

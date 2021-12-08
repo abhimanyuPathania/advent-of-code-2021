@@ -5,5 +5,7 @@ test('day 04', () => {
     .then((result) => {
       expect(result).toStrictEqual([16674, 7075]);
     })
-    .catch((err) => console.error(err));
+    .catch((err) => {
+      throw err;
+    });
 });

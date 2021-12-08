@@ -6,7 +6,9 @@ describe('day 05', () => {
       .then((result) => {
         expect(result).toStrictEqual([5, 12]);
       })
-      .catch((err) => console.error(err));
+      .catch((err) => {
+        throw err;
+      });
   });
 
   test('should be valid for puzzle input', () => {
@@ -14,6 +16,8 @@ describe('day 05', () => {
       .then((result) => {
         expect(result).toStrictEqual([7674, 20898]);
       })
-      .catch((err) => console.error(err));
+      .catch((err) => {
+        throw err;
+      });
   });
 });

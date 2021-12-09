@@ -9,36 +9,26 @@ async function getInputData(filename) {
   return inputData;
 }
 
-function solutionDay09Part1(inputData) {
-  const rowCount = inputData.length;
-  const columnCount = inputData[0].length;
-  const lowPoints = [];
+function getValueFromKey(key, inputData) {
+  if (!inputData) throw new Error('inputData not found');
 
-  for (let row = 0; row < rowCount; row += 1) {
-    for (let column = 0; column < columnCount; column += 1) {
-      const current = inputData[row][column];
-      let locals = [
-        // left
-        inputData[row] !== undefined ? inputData[row][column - 1] : undefined,
-        // right
-        inputData[row] !== undefined ? inputData[row][column + 1] : undefined,
-        // top
-        inputData[row - 1] !== undefined
-          ? inputData[row - 1][column]
-          : undefined,
-        // bottom
-        inputData[row + 1] !== undefined
-          ? inputData[row + 1][column]
-          : undefined,
-      ].filter((v) => v !== undefined);
-      const minLocal = Math.min(...locals);
-      if (current < minLocal) lowPoints.push(current);
-    }
-  }
+  const keyArr = key.split(',');
+  const row = keyArr[0];
+  const col = keyArr[1];
+  const value = inputData[row] !== undefined ? inputData[row][col] : undefined;
+  return value;
+}
 
-  const risk = lowPoints.reduce((sum, v) => sum + (v + 1), 0);
-  console.log('solutionDay09::part1', risk);
-  return risk;
+function getAdjacentKeys(key) {
+  const keyArr = key.split(',').map((v) => parseInt(v, 10));
+  const row = keyArr[0];
+  const col = keyArr[1];
+  return [
+    `${row},${col - 1}`,
+    `${row},${col + 1}`,
+    `${row - 1},${col}`,
+    `${row + 1},${col}`,
+  ];
 }
 
 function getLocalMinimas(inputData) {
@@ -72,26 +62,14 @@ function getLocalMinimas(inputData) {
   return minimas;
 }
 
-function getValueFromKey(key, inputData) {
-  if (!inputData) throw new Error('inputData not found');
+function solutionDay09Part1(inputData) {
+  const localMinimas = getLocalMinimas(inputData);
 
-  const keyArr = key.split(',');
-  const row = keyArr[0];
-  const col = keyArr[1];
-  const value = inputData[row] !== undefined ? inputData[row][col] : undefined;
-  return value;
-}
-
-function getAdjacentKeys(key) {
-  const keyArr = key.split(',').map((v) => parseInt(v, 10));
-  const row = keyArr[0];
-  const col = keyArr[1];
-  return [
-    `${row},${col - 1}`,
-    `${row},${col + 1}`,
-    `${row - 1},${col}`,
-    `${row + 1},${col}`,
-  ];
+  const risk = localMinimas
+    .map((key) => getValueFromKey(key, inputData))
+    .reduce((sum, v) => sum + (v + 1), 0);
+  console.log('solutionDay09::part1', risk);
+  return risk;
 }
 
 function getAdjacentMinimas(inputData, targetKey) {

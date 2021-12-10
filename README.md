@@ -9,5 +9,4 @@ https://adventofcode.com/2021
 
 ## TODOs
 
-- Solve day 06 part 2
 - Optimize day 08 solution

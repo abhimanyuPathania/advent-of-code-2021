@@ -9,37 +9,35 @@ async function getInputData(filename) {
   return inputData[0];
 }
 
-function solutionDay06Worker(inputData, days) {
-  const initialState = [...inputData];
-  let simulatedState = initialState;
-  for (let i = 0; i < days; i += 1) {
-    console.log(`day-${i} :: ${simulatedState.length}`);
-    let newFishBornForTheDay = 0;
-    for (let j = 0; j < simulatedState.length; j += 1) {
-      const internalTime = simulatedState[j];
-      if (internalTime > 0) {
-        simulatedState[j] = internalTime - 1;
-      } else {
-        simulatedState[j] = 6;
-        newFishBornForTheDay += 1;
-      }
-    }
+function simulateFishes(initialState, days, puzzleNo) {
+  // fish can have timer value from 0 to 8
+  const counts = Array.from({ length: 9 }).fill(0);
+  // initialize counts with initial state
+  initialState.forEach((timer) => {
+    const currentCount = counts[timer];
+    counts[timer] = currentCount + 1;
+  });
 
-    for (let i = 1; i <= newFishBornForTheDay; i += 1) {
-      simulatedState.push(8);
+  for (let i = 0; i < days; i += 1) {
+    const newBornFish = counts[0];
+    for (let j = 1; j < 9; j += 1) {
+      counts[j - 1] = counts[j];
     }
+    // fishes giving birth reset to "6" timer
+    counts[6] = counts[6] + newBornFish;
+    counts[8] = newBornFish;
   }
-  const finalNumberOfFish = simulatedState.length;
-  console.log('solutionDay06::part1', finalNumberOfFish);
-  return finalNumberOfFish;
+
+  const totalCount = counts.reduce((sum, v) => sum + v, 0);
+  console.log(`solutionDay06::part${puzzleNo}`, totalCount);
+  return totalCount;
 }
 
 async function solutionDay06(filename) {
   const inputData = await getInputData(filename);
-  const part1Solution = solutionDay06Worker(inputData, 80);
-  // const part1Solution = solutionDay06Worker([6], 256);
-  // const part2Solution = solutionDay06Worker(inputData, 256);
-  return [part1Solution, undefined];
+  const part1Solution = simulateFishes(inputData, 80, 1);
+  const part2Solution = simulateFishes(inputData, 256, 2);
+  return [part1Solution, part2Solution];
 }
 
 module.exports = {

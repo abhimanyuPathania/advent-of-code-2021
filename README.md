@@ -10,3 +10,4 @@ https://adventofcode.com/2021
 ## TODOs
 
 - Optimize day 08 solution
+- Add day 12 solutions
